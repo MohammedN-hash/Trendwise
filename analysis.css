@@ -1,0 +1,67 @@
+body {
+	background-color: rgb(3, 0, 43);
+}
+
+h1 {
+	font-family: "Times New Roman", Times, serif;
+	text-align: center;
+	color: white;
+}
+
+p {
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+}
+
+
+.chart-container {
+	width: 50%;
+	margin: auto;
+}
+
+#sentiment-chart {
+	height: 200px;
+	margin-top: 20px;
+}
+
+.center {
+	text-align: center;
+	margin-left: 40%;
+	margin-right: 50%;
+}
+
+
+
+.textName {
+	white-space: nowrap;
+	overflow: hidden;
+	border-right: 4px solid #fefefe;
+	animation: cursor 4s step-start ,
+		text 4s steps(45) ;
+	font-family: sans-serif;
+	color: white;
+	margin-left: 5%;
+
+}
+
+@keyframes cursor {
+
+	0%,
+	100% {
+		border-color: #ffffff;
+	}
+}
+
+@keyframes text {
+	
+	0% {
+		width: 0;
+
+	}
+
+	100% {
+		width: 45ch;
+
+	}
+}
