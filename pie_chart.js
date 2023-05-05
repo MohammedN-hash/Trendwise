@@ -6,17 +6,20 @@ let chart;
 
 
 async function getData() {
+
   try {
-    const response = await fetch('testdata.csv');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.text();
-    dataset = data;
+    const response = await fetch('http://localhost:8000/getAnalysis?query=Tesla&post_limit=3');
+    const data = await response.json();
+    const dataset = data.list1;
+    const list2 = data.list2;
+    const list3 = data.list3;
+    return [list1, list2, list3];
   } catch (error) {
-    console.error('There was a problem fetching the data:', error);
+    console.error(error);
   }
 }
+
+
 
 
 async function updateChart() {
@@ -105,6 +108,6 @@ const textbox = document.getElementById("topic");
 textbox.addEventListener("input", updateChart);
 
 // Call getData initially to get the data at the begining
-getData()
+// getData()
 // Call updateChart initially to display the chart based on the initial value of the text box
 updateChart();
