@@ -14,9 +14,28 @@ p {
 	color: white;
 }
 
-
+.container {
+	display: flex;
+	justify-content: space-between;
+  }
+  
+  .left-container, .right-container {
+	width: 50%; /* adjust as needed */
+	object-fit: fill;
+	box-sizing: border-box;
+	padding: 20px;
+  }
+  
+  .left-container {
+	background-color:transparent; /* set background color for left container */
+  }
+  
+  .right-container {
+	background-color: transparent; /* set background color for right container */
+  }
+  
 .chart-container {
-	width: 50%;
+	width: 100%;
 	margin: auto;
 }
 

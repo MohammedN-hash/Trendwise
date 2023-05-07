@@ -1,25 +1,47 @@
 // declare a variable to store the data
-let dataset;
-let dataCount;
+let df_reddit_posts;
+let df_reddit_comments;
+let dataCount = [0, 0, 0, 0, 0, 0, 0,0];
 // declare a variable to store the chart object
 let chart;
 
+emotions_labels=["anger","disgust","fear","joy","neutral","sadness","surprise","optimism"]
 
 async function getData() {
 
   try {
-    const response = await fetch('http://localhost:8000/getAnalysis?query=Tesla&post_limit=3');
+    // Make an HTTP request to a local server
+    const response = await fetch('http://localhost:8000/getAnalysis?query=Tesla&post_limit=7&comment_limit=9');
+    
+    // Convert the response data to JSON format
     const data = await response.json();
-    const dataset = data.list1;
-    const list2 = data.list2;
-    const list3 = data.list3;
-    return [list1, list2, list3];
+    
+    // Extract the two lists from the JSON data
+    df_reddit_posts = data['posts'];
+    df_reddit_comments = data['comments'];
+    console.log(df_reddit_posts);
+    console.log(df_reddit_comments);
+    
   } catch (error) {
+    // If an error occurs, log it to the console
     console.error(error);
   }
 }
 
 
+async function count_emotions_with_labels(emotionsdata_list) {
+
+  emotionsdata_list.forEach(emotionsdata => {
+    const count = emotions_labels.map(label => emotionsdata.filter(val => val['emotion'] === label).length);
+
+    for (let i = 0; i < dataCount.length; i++) {
+      dataCount[i] += count[i];
+    }
+
+  });
+  console.log(dataCount);
+  return dataCount;
+}
 
 
 async function updateChart() {
@@ -28,24 +50,11 @@ async function updateChart() {
   if (chart) {
     chart.destroy();
   }
-  if (!dataset) {
-    await getData();
-  }
+  
+  await getData();
+  await count_emotions_with_labels([df_reddit_posts,df_reddit_comments])
+  
 
-  // Parse the CSV data using Papa Parse
-  let parsedData = Papa.parse(dataset, { header: true });
-  // Filter each label in a certin topic 
-  let filteredData = parsedData.data.filter(row => row['Query'] === topic);
-  const columnName = 'Label';
-  const negative = filteredData.filter(val => val[columnName] == '0');
-  const natural = filteredData.filter(val => val[columnName] == '2');
-  const positive = filteredData.filter(val => val[columnName] == '4');
-  // Count all filtered labeles
-  const negative_count = negative.length;
-  const natural_count = natural.length;
-  const positive_count = positive.length;
-
-  dataCount = [negative_count, natural_count, positive_count];
 
   // Create the chart
   const ctx = document.getElementById('sentiment-chart').getContext('2d');
@@ -53,19 +62,30 @@ async function updateChart() {
   chart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Negative", "Natural", "Positive"],
+      labels:emotions_labels,
       datasets: [{
         label: 'Person/s',
         data: dataCount,
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
           'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
+          'rgba(255, 201, 86, 0.5)',
+          'rgba(54, 162, 236, 0.5)',
+          'rgba(255, 206, 89, 0.5)',
+          'rgba(255, 218, 86, 0.5)',
+          'rgba(253, 223, 87, 0.5)',
+          'rgba(235, 246, 88, 0.5)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
+          'rgba(255, 99, 137, 1)',
+          'rgba(54, 162, 239, 1)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(54, 162, 236, 0.5)',
+          'rgba(54, 162, 234, 0.5)',
+          'rgba(255, 206, 89, 0.5)',
+          'rgba(253, 223, 87, 0.5)',
+          'rgba(235, 246, 88, 0.5)',
+
         ],
         borderWidth: 1
       }]
@@ -79,25 +99,6 @@ async function updateChart() {
     }
   });
 
-  // Get sample topics 
-  let Query = parsedData.data.map(row => row['Query']);
-  let uniqueValues = [...new Set(Query)];
-  let uniqueValueCount = uniqueValues.length;
-  let randomValues = uniqueValues.sort(() => Math.random() - 0.5).slice(0, 5);
-  // Show sample topics 
-  const RandomeExamples = document.getElementById("RandomeExamples");
-  RandomeExamples.textContent = 'Randome examples: ' + randomValues.join(", ");
-
-
-  // Get sample articles 
-  const randomIndex = Math.floor(Math.random() * negative.length);
-
-  let RandomePositiveArticles = positive[randomIndex]['Tweet'];
-  let RandomeNegativeArticles = negative[randomIndex]['Tweet'];
-  // Show sample topics 
-  const RandomeArticlesPlaceHolder = document.getElementById("RandomeArticles");
-  RandomeArticlesPlaceHolder.textContent = 'Randome postive: ' + RandomePositiveArticles+'                                            Randome negative '+RandomeNegativeArticles;
-
 } 
 
 
@@ -108,6 +109,6 @@ const textbox = document.getElementById("topic");
 textbox.addEventListener("input", updateChart);
 
 // Call getData initially to get the data at the begining
-// getData()
+getData()
 // Call updateChart initially to display the chart based on the initial value of the text box
 updateChart();
