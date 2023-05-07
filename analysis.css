@@ -1,22 +1,24 @@
 body {
-	background-color: rgb(3, 0, 43);
+	background-color: rgb(255, 255, 255);
 }
 
 h1 {
 	font-family: "Times New Roman", Times, serif;
 	text-align: center;
-	color: white;
+	color: rgb(0, 0, 0);
 }
 
 p {
 	font-family: sans-serif;
 	text-align: center;
-	color: white;
+	color: rgb(0, 0, 0);
 }
 
 .container {
 	display: flex;
 	justify-content: space-between;
+	color: rgb(0, 0, 0);
+
   }
   
   .left-container, .right-container {
@@ -45,10 +47,21 @@ p {
 }
 
 .center {
-	text-align: center;
-	margin-left: 40%;
-	margin-right: 50%;
-}
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+  }
+  
+  input[type="number"] {
+	margin-left: 10px;
+  }
+  
+  label {
+	color: rgb(0, 0, 0);
+	margin-right: 5px;
+	margin-left: 5px;
+  }
 
 
 

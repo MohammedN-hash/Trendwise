@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Social Media Sentiment Analysis</title>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="analysis.css">
 </head>
+
 <body>
 	<h1 class="textName">Type any topic to see how people reacted with this topic</h1>
-     <p id="RandomeExamples">Randome examples:</p>
+	<p id="RandomeExamples">Randome examples:</p>
 
-	 <div class="center">
+	<div class="center">
 		<input type="text" id="topic" value="obama" />
-		</div>
+		<label for="N_posts">Number of posts:</label>
+		<input type="number" id="N_posts" name="N_posts" min="10" max="200" step="1">
+		<label for="N_comments">Number of comments:</label>
+		<input type="number" id="N_comments" name="N_comments" min="10" max="100" step="1">
+	</div>
 
-	 <div class="container">
+	<div class="container">
 		<div class="left-container">
 			<div class="chart-container">
 				<canvas id="sentiment-chart"></canvas>
 			</div>
 		</div>
 		<div class="right-container">
-		  Map is here
+			Map is here
 		</div>
-	  </div>
-	  
+	</div>
 
 
 
 
-
-	
 	<script src="pie_chart.js"></script>
 
 	<p id="RandomeArticles">Randome articles:</p>
 
 </body>
+
 </html>

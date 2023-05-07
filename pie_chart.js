@@ -7,11 +7,18 @@ let chart;
 
 emotions_labels=["anger","disgust","fear","joy","neutral","sadness","surprise","optimism"]
 
-async function getData() {
+async function getData(topic, number_posts = 10, number_comments = 10) {
+  // Set default values if number_posts or number_comments is empty or not provided
+  if (!number_posts || isNaN(number_posts)) {
+    number_posts = 10;
+  }
+  if (!number_comments || isNaN(number_comments)) {
+    number_comments = 5;
+  }
 
   try {
     // Make an HTTP request to a local server
-    const response = await fetch('http://localhost:8000/getAnalysis?query=Tesla&post_limit=7&comment_limit=9');
+    const response = await fetch('http://localhost:8000/getAnalysis?query='+topic+'&post_limit='+number_posts+'&comment_limit='+number_comments);
     
     // Convert the response data to JSON format
     const data = await response.json();
@@ -19,14 +26,14 @@ async function getData() {
     // Extract the two lists from the JSON data
     df_reddit_posts = data['posts'];
     df_reddit_comments = data['comments'];
-    console.log(df_reddit_posts);
-    console.log(df_reddit_comments);
+
     
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
   }
 }
+
 
 
 async function count_emotions_with_labels(emotionsdata_list) {
@@ -45,13 +52,17 @@ async function count_emotions_with_labels(emotionsdata_list) {
 
 
 async function updateChart() {
+
   // Get the value of the data
-  const topic = document.getElementById("topic").value;
+  let topic = document.getElementById("topic").value;
+  let number_posts = document.getElementById("N_posts").value;
+  let number_comments = document.getElementById("N_comments").value;
+
   if (chart) {
     chart.destroy();
   }
   
-  await getData();
+  await getData(topic,number_posts,number_comments);
   await count_emotions_with_labels([df_reddit_posts,df_reddit_comments])
   
 
@@ -108,6 +119,8 @@ async function updateChart() {
 const textbox = document.getElementById("topic");
 textbox.addEventListener("input", updateChart);
 
+const number_posts = document.getElementById("N_posts");
+number_posts.addEventListener("input", updateChart);
 // Call getData initially to get the data at the begining
 getData()
 // Call updateChart initially to display the chart based on the initial value of the text box
