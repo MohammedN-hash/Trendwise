@@ -1,3 +1,6 @@
+// import map from 'map.js';
+
+
 // declare a variable to store the data
 let df_reddit_posts;
 let df_reddit_comments;
@@ -114,10 +117,13 @@ async function updateChart() {
 
 
 
-
+function updateChartAndMap() {
+  updateChart();
+  map();
+}
 // Add an event listener to the text box element
-const textbox = document.getElementById("topic");
-textbox.addEventListener("input", updateChart);
+// const textbox = document.getElementById("topic");
+// textbox.addEventListener("input", updateChartAndMap);
 
 const number_posts = document.getElementById("N_posts");
 number_posts.addEventListener("input", updateChart);

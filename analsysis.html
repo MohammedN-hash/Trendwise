@@ -3,8 +3,13 @@
 
 <head>
 	<title>Social Media Sentiment Analysis</title>
+	<!-- Liprary for the pie chart -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<!-- PapaParse to filter data -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+	<!-- Map open source -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="analysis.css">
 </head>
 
@@ -27,14 +32,17 @@
 			</div>
 		</div>
 		<div class="right-container">
+			<div id="plot"></div>
 			Map is here
 		</div>
 	</div>
 
 
 
+	<script src="map.js"></script>
 
 	<script src="pie_chart.js"></script>
+
 
 	<p id="RandomeArticles">Randome articles:</p>
 
