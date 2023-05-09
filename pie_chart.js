@@ -1,4 +1,4 @@
-// import map from 'map.js';
+
 
 
 // declare a variable to store the data
@@ -117,17 +117,12 @@ async function updateChart() {
 
 
 
-function updateChartAndMap() {
-  updateChart();
-  map();
-}
-// Add an event listener to the text box element
-// const textbox = document.getElementById("topic");
-// textbox.addEventListener("input", updateChartAndMap);
 
-const number_posts = document.getElementById("N_posts");
+// Add an event listener to the text box element
+// let searchBtn = document.getElementById("searchBtn");
+// searchBtn.addEventListener("click", updateChart);
+
+let number_posts = document.getElementById("N_posts");
 number_posts.addEventListener("input", updateChart);
-// Call getData initially to get the data at the begining
-getData()
-// Call updateChart initially to display the chart based on the initial value of the text box
-updateChart();
+
+

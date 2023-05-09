@@ -18,11 +18,12 @@
 	<p id="RandomeExamples">Randome examples:</p>
 
 	<div class="center">
-		<input type="text" id="topic" value="obama" />
+		<input type="text" id="topic" value="3d glasses" />
 		<label for="N_posts">Number of posts:</label>
 		<input type="number" id="N_posts" name="N_posts" min="10" max="200" step="1">
 		<label for="N_comments">Number of comments:</label>
 		<input type="number" id="N_comments" name="N_comments" min="10" max="100" step="1">
+		<button id="searchBtn"  onclick="updateChart(); map();">Search</button>	
 	</div>
 
 	<div class="container">
@@ -32,8 +33,7 @@
 			</div>
 		</div>
 		<div class="right-container">
-			<div id="plot"></div>
-			Map is here
+			<div id="map"></div>
 		</div>
 	</div>
 
