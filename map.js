@@ -230,7 +230,7 @@ async function getData(topic, region = '') {
 
 
 
-async function map() {
+export async function map() {
     let topic = document.getElementById("topic").value;
     await getData(topic)
 
@@ -265,8 +265,4 @@ async function map() {
 
 
 
-
-// Add an event listener to the text box element
-// let btn = document.getElementById("searchBtn");
-// btn.addEventListener("click", map);
 

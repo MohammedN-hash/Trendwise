@@ -1,4 +1,4 @@
-
+import { map } from './map.js';
 
 
 // declare a variable to store the data
@@ -8,7 +8,7 @@ let dataCount = [0, 0, 0, 0, 0, 0, 0,0];
 // declare a variable to store the chart object
 let chart;
 
-emotions_labels=["anger","disgust","fear","joy","neutral","sadness","surprise","optimism"]
+let emotions_labels=["anger","disgust","fear","joy","neutral","sadness","surprise","optimism"]
 
 async function getData(topic, number_posts = 10, number_comments = 10) {
   // Set default values if number_posts or number_comments is empty or not provided
@@ -112,17 +112,53 @@ async function updateChart() {
       }
     }
   });
-
+  addRandomPostsAndComments()
 } 
 
 
 
+function addRandomPostsAndComments() {
+  const randomArticles = document.getElementById("RandomeArticles");
+
+  // Select two random posts
+  const post1 = df_reddit_posts[Math.floor(Math.random() * df_reddit_posts.length)];
+  const post2 = df_reddit_posts[Math.floor(Math.random() * df_reddit_posts.length)];
+
+  // Filter comments for each post
+  const comments1 = df_reddit_comments.filter(comment => comment["post_id"] === post1['id']);
+  const comments2 = df_reddit_comments.filter(comment => comment["post_id"] === post2["id"]);
+
+  // Append posts and comments to the DOM
+  randomArticles.innerHTML = `
+    <div>
+      <h2>${post1.title}</h2>
+      <p>${post1.text}</p>
+      <ul>
+        ${comments1.map(comment => `<li>${comment.text}</li>`).join("")}
+      </ul>
+    </div>
+    <div>
+      <h2>${post2.title}</h2>
+      <p>${post2.text}</p>
+      <ul>
+        ${comments2.map(comment => `<li>${comment.text}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+}
+
+
 
 // Add an event listener to the text box element
-// let searchBtn = document.getElementById("searchBtn");
-// searchBtn.addEventListener("click", updateChart);
+let searchBtn = document.getElementById("searchBtn");
+searchBtn.addEventListener("click", () => {
+  updateChart();
+  map();
+});
 
 let number_posts = document.getElementById("N_posts");
 number_posts.addEventListener("input", updateChart);
 
+let nummber_comments = document.getElementById("N_comments");
+nummber_comments.addEventListener("input", updateChart);
 
