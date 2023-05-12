@@ -4,11 +4,11 @@ import { map } from './map.js';
 // declare a variable to store the data
 let df_reddit_posts;
 let df_reddit_comments;
-let dataCount = [0, 0, 0, 0, 0, 0, 0,0];
+let dataCount = [0, 0, 0, 0, 0, 0, 0, 0];
 // declare a variable to store the chart object
 let chart;
 
-let emotions_labels=["anger","disgust","fear","joy","neutral","sadness","surprise","optimism"]
+let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
 
 async function getData(topic, number_posts = 10, number_comments = 10) {
   // Set default values if number_posts or number_comments is empty or not provided
@@ -21,16 +21,16 @@ async function getData(topic, number_posts = 10, number_comments = 10) {
 
   try {
     // Make an HTTP request to a local server
-    const response = await fetch('http://localhost:8000/getAnalysis?query='+topic+'&post_limit='+number_posts+'&comment_limit='+number_comments);
-    
+    const response = await fetch('http://localhost:8000/getAnalysis?query=' + topic + '&post_limit=' + number_posts + '&comment_limit=' + number_comments);
+
     // Convert the response data to JSON format
     const data = await response.json();
-    
+
     // Extract the two lists from the JSON data
     df_reddit_posts = data['posts'];
     df_reddit_comments = data['comments'];
 
-    
+
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
@@ -64,10 +64,10 @@ async function updateChart() {
   if (chart) {
     chart.destroy();
   }
-  
-  await getData(topic,number_posts,number_comments);
-  await count_emotions_with_labels([df_reddit_posts,df_reddit_comments])
-  
+
+  await getData(topic, number_posts, number_comments);
+  await count_emotions_with_labels([df_reddit_posts, df_reddit_comments])
+
 
 
   // Create the chart
@@ -76,7 +76,7 @@ async function updateChart() {
   chart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels:emotions_labels,
+      labels: emotions_labels,
       datasets: [{
         label: 'Person/s',
         data: dataCount,
@@ -113,7 +113,7 @@ async function updateChart() {
     }
   });
   addRandomPostsAndComments()
-} 
+}
 
 
 
@@ -130,20 +130,47 @@ function addRandomPostsAndComments() {
 
   // Append posts and comments to the DOM
   randomArticles.innerHTML = `
-    <div>
-      <h2>${post1.title}</h2>
-      <p>${post1.text}</p>
-      <ul>
-        ${comments1.map(comment => `<li>${comment.text}</li>`).join("")}
+  <div class="random-articles">
+  <h2 class="section-title">Random posts</h2>
+  
+  <div class="post-container">
+    <h2>Post<h2>
+    <h3 class="post-title">Author: ${post1.author}</h3>
+    <div class="post-content">
+      <p class="post-text">${post1.text}</p>
+      <div class="post-emotion">Classfied emotion: ${post1.emotion}</div>
+      <h2>Comments<h2>
+
+      <ul class="comment-list">
+        ${comments1.map(comment => `
+        <li class="comment">
+          <div class="comment-text">${comment.text}</div>
+          <div class="comment-emotion">Classfied emotion: ${comment.emotion}</div>
+        </li>`)}
       </ul>
     </div>
-    <div>
-      <h2>${post2.title}</h2>
-      <p>${post2.text}</p>
-      <ul>
-        ${comments2.map(comment => `<li>${comment.text}</li>`).join("")}
+  </div>
+  
+  <div class="post-container">
+    <h2>Post<h2>
+
+    <h3 class="post-title">${post2.author}</h3>
+    <div class="post-content">
+      <p class="post-text">${post2.text}</p>
+      <div class="post-emotion">Classfied emotion: ${post2.emotion}</div>
+      <h2>Comments<h2>
+
+      <ul class="comment-list">
+        ${comments2.map(comment => `
+        <li class="comment">
+          <div class="comment-text">${comment.text}</div>
+          <div class="comment-emotion">Classfied emotion: ${comment.emotion}</div>
+        </li>`)}
       </ul>
     </div>
+  </div>
+</div>
+
   `;
 }
 
