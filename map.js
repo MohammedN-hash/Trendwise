@@ -197,13 +197,110 @@ function convertIso2ToIso3(iso2) {
         'RE': 'REU',
         'RO': 'ROU',
         'RS': 'SRB',
+        'MR': 'MRT',
+        'MS': 'MSR',
+        'MT': 'MLT',
+        'MU': 'MUS',
+        'MV': 'MDV',
+        'MW': 'MWI',
+        'MX': 'MEX',
+        'MY': 'MYS',
+        'MZ': 'MOZ',
+        'NA': 'NAM',
+        'NC': 'NCL',
+        'NE': 'NER',
+        'NF': 'NFK',
+        'NG': 'NGA',
+        'NI': 'NIC',
+        'NL': 'NLD',
+        'NO': 'NOR',
+        'NP': 'NPL',
+        'NR': 'NRU',
+        'NU': 'NIU',
+        'NZ': 'NZL',
+        'OM': 'OMN',
+        'PA': 'PAN',
+        'PE': 'PER',
+        'PF': 'PYF',
+        'PG': 'PNG',
+        'PH': 'PHL',
+        'PK': 'PAK',
+        'PL': 'POL',
+        'PM': 'SPM',
+        'PN': 'PCN',
+        'PR': 'PRI',
+        'PS': 'PSE',
+        'PT': 'PRT',
+        'PW': 'PLW',
+        'PY': 'PRY',
+        'QA': 'QAT',
+        'RE': 'REU',
+        'RO': 'ROU',
+        'RS': 'SRB',
+        'RU': 'RUS',
+        'RW': 'RWA',
+        'SA': 'SAU',
+        'SB': 'SLB',
+        'SC': 'SYC',
+        'SD': 'SDN',
+        'SE': 'SWE',
+        'SG': 'SGP',
+        'SH': 'SHN',
+        'SI': 'SVN',
+        'SJ': 'SJM',
+        'SK': 'SVK',
+        'SL': 'SLE',
+        'SM': 'SMR',
+        'SN': 'SEN',
+        'SO': 'SOM',
+        'SR': 'SUR',
+        'SS': 'SSD',
+        'ST': 'STP',
+        'SV': 'SLV',
+        'SX': 'SXM',
+        'SY': 'SYR',
+        'SZ': 'SWZ',
+        'TC': 'TCA',
+        'TD': 'TCD',
+        'TF': 'ATF',
+        'TG': 'TGO',
+        'TH': 'THA',
+        'TJ': 'TJK',
+        'TK': 'TKL',
+        'TL': 'TLS',
+        'TM': 'TKM',
+        'TN': 'TUN',
+        'TO': 'TON',
+        'TR': 'TUR',
+        'TT': 'TTO',
+        'TV': 'TUV',
+        'TW': 'TWN',
+        'TZ': 'TZA',
+        'UA': 'UKR',
+        'UG': 'UGA',
+        'UM': 'UMI',
+        'US': 'USA',
+        'UY': 'URY',
+        'UZ': 'UZB',
+        'VA': 'VAT',
+        'VC': 'VCT',
+        'VE': 'VEN',
+        'VG': 'VGB',
+        'VI': 'VIR',
+        'VN': 'VNM',
+        'VU': 'VUT',
+        'WF': 'WLF',
+        'WS': 'WSM',
+        'YE': 'YEM',
+        'YT': 'MYT',
+        'ZA': 'ZAF',
     };
     return iso2ToIso3[iso2];
 }
-async function getData(topic, region = '') {
+async function getData(topic, from_date, to_date, region = '',resolution='WORLD') {
     try {
         // Make an HTTP request to a local server
-        const response = await fetch(`http://localhost:8000/getInterest?query=${topic}&region=${region}&resolution=WORLD&from_date=2022-01-01&to_date=2023-04-30`);
+        const response = await fetch(`http://localhost:8000/google-trend?query=${topic}&region=${region}&resolution=${resolution}&from_date=${from_date}&to_date=${to_date}`);
 
         // Convert the response data to JSON format
         df_trend = await response.json();
@@ -232,7 +329,10 @@ async function getData(topic, region = '') {
 
 export async function map() {
     let topic = document.getElementById("topic").value;
-    await getData(topic)
+    let from_date = document.getElementById("from").value;
+    let to_date = document.getElementById("to").value;
+
+    await getData(topic, from_date, to_date)
 
     // Create the Plotly figure with a choropleth map
     var figure = {
@@ -249,15 +349,15 @@ export async function map() {
             geo: {
                 scope: '',
                 showlakes: true,
-          
+
             },
             height: 500, // set the height to 500 pixels
             width: 800 // set the width to 800 pixels
         }
     };
-    
+
     // Set displayModeBar to false to remove the mode bar
-    var config = {displayModeBar: false};
+    var config = { displayModeBar: false };
 
     // Display the Plotly figure
     Plotly.newPlot('map', figure, config);

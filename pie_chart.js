@@ -10,7 +10,7 @@ let chart;
 
 let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
 
-async function getData(topic, number_posts = 10, number_comments = 10) {
+async function getData(topic, from_date, to_date, number_posts = 10, number_comments = 10) {
   // Set default values if number_posts or number_comments is empty or not provided
   if (!number_posts || isNaN(number_posts)) {
     number_posts = 10;
@@ -21,7 +21,7 @@ async function getData(topic, number_posts = 10, number_comments = 10) {
 
   try {
     // Make an HTTP request to a local server
-    const response = await fetch('http://localhost:8000/getAnalysis?query=' + topic + '&post_limit=' + number_posts + '&comment_limit=' + number_comments);
+    const response = await fetch(`http://localhost:8000/social-networks?query=${topic}&from_date=${from_date}&to_date=${to_date}&subreddit=All&post_limit=${number_posts}&comment_limit=${number_comments}`);
 
     // Convert the response data to JSON format
     const data = await response.json();
@@ -60,12 +60,14 @@ async function updateChart() {
   let topic = document.getElementById("topic").value;
   let number_posts = document.getElementById("N_posts").value;
   let number_comments = document.getElementById("N_comments").value;
+  let from_date = document.getElementById("from").value;
+  let to_date = document.getElementById("to").value;
 
   if (chart) {
     chart.destroy();
   }
 
-  await getData(topic, number_posts, number_comments);
+  await getData(topic, from_date, to_date, number_posts, number_comments);
   await count_emotions_with_labels([df_reddit_posts, df_reddit_comments])
 
 
@@ -183,9 +185,5 @@ searchBtn.addEventListener("click", () => {
   map();
 });
 
-let number_posts = document.getElementById("N_posts");
-number_posts.addEventListener("input", updateChart);
 
-let nummber_comments = document.getElementById("N_comments");
-nummber_comments.addEventListener("input", updateChart);
 
