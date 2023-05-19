@@ -20,6 +20,10 @@ async function getData(topic, from_date, to_date, number_posts = 10, number_comm
   }
 
   try {
+    // Show the loading Circle
+    const loadingCicrle = document.getElementById("loading-pie");
+    loadingCicrle.style.display = "block";
+
     // Make an HTTP request to a local server
     const response = await fetch(`http://localhost:8000/social-networks?query=${topic}&from_date=${from_date}&to_date=${to_date}&subreddit=All&post_limit=${number_posts}&comment_limit=${number_comments}`);
 
@@ -34,6 +38,11 @@ async function getData(topic, from_date, to_date, number_posts = 10, number_comm
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
+  }finally{
+    // hide the loading Circle
+    const loadingCicrle = document.getElementById("loading-pie");
+    loadingCicrle.style.display = "block";
+    
   }
 }
 

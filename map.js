@@ -297,8 +297,19 @@ function convertIso2ToIso3(iso2) {
     };
     return iso2ToIso3[iso2];
 }
-async function getData(topic, from_date, to_date, region = '',resolution='WORLD') {
+
+
+
+async function getData(topic, from_date, to_date, region = '', resolution = 'WORLD') {
     try {
+        // Show the loading bar
+        const loadingCicrle = document.getElementById("loading-map");
+        loadingCicrle.style.display = "block";
+
+
+        // Simulate the loading process with setTimeout
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
         // Make an HTTP request to a local server
         const response = await fetch(`http://localhost:8000/google-trend?query=${topic}&region=${region}&resolution=${resolution}&from_date=${from_date}&to_date=${to_date}`);
 
@@ -311,7 +322,6 @@ async function getData(topic, from_date, to_date, region = '',resolution='WORLD'
 
         // Push the data into the arrays geo_names and values 
         for (const [name, value] of df_trend) {
-
             geo_names.push(name);
             values.push(value);
         }
@@ -321,11 +331,12 @@ async function getData(topic, from_date, to_date, region = '',resolution='WORLD'
     } catch (error) {
         // If an error occurs, log it to the console
         console.error(error);
+    } finally {
+
+        const loadingCicrle = document.getElementById("loading-map");
+        loadingCicrle.style.display = "none";
     }
 }
-
-
-
 
 export async function map() {
     let topic = document.getElementById("topic").value;

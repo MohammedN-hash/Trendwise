@@ -31,14 +31,30 @@
 	</div>
 
 	<div class="container">
+		
 		<div class="left-container">
+			<!-- Pie chart -->
 			<div class="chart-container">
 				<canvas id="sentiment-chart"></canvas>
+
+				<div id="loading-pie" style="display: none;">
+					<div class="loading-circle"></div>
+				</div>
+
 			</div>
 		</div>
+
 		<div class="right-container">
+				<!-- Map -->
 			<div id="map"></div>
+<div class="centerMapLoading">
+			<div id="loading-map" style="display: none;">
+				<div class="loading-circle"></div>
+			</div>
 		</div>
+		</div>
+
+
 	</div>
 
 
@@ -52,7 +68,7 @@
 
 
 
-	
+
 	<script src="map.js"></script>
 
 	<script type="module" src="pie_chart.js"></script>
