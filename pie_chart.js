@@ -41,7 +41,7 @@ async function getData(topic, from_date, to_date, number_posts = 10, number_comm
   }finally{
     // hide the loading Circle
     const loadingCicrle = document.getElementById("loading-pie");
-    loadingCicrle.style.display = "block";
+    loadingCicrle.style.display = "none";
     
   }
 }
@@ -102,15 +102,14 @@ async function updateChart() {
           'rgba(235, 246, 88, 0.5)',
         ],
         borderColor: [
-          'rgba(255, 99, 137, 1)',
-          'rgba(54, 162, 239, 1)',
-          'rgba(255, 206, 86, 0.5)',
+          'rgba(255, 99, 132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 201, 86, 0.5)',
           'rgba(54, 162, 236, 0.5)',
-          'rgba(54, 162, 234, 0.5)',
           'rgba(255, 206, 89, 0.5)',
+          'rgba(255, 218, 86, 0.5)',
           'rgba(253, 223, 87, 0.5)',
           'rgba(235, 246, 88, 0.5)',
-
         ],
         borderWidth: 1
       }]
