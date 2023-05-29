@@ -11,56 +11,61 @@ let chart;
 
 let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
 
+
 async function get_data(topic, from_date, to_date, limit = 20) {
-  // Set default values if number_posts or number_comments is empty or not provided
+  // Set default values if limit is empty or not provided
   if (!limit || isNaN(limit)) {
     limit = 20;
   }
 
-
   try {
     // Show the loading Circle
-    const loadingCicrle = document.getElementById("loading_news_pie");
-    loadingCicrle.style.display = "block";
+    const loadingCircle = document.getElementById("loading_news_pie");
+    loadingCircle.style.display = "block";
 
     const encodedTopic = encodeURIComponent(topic);
-    
     const url = `http://localhost:8000/get_news?query=${encodedTopic}&from_date=${from_date}&to_date=${to_date}&limit=${limit}`;
     const response = await fetch(url);
     // Convert the response data to JSON format
     const data = await response.json();
-    console.log(data)
+    console.log(data);
 
-    // Extract the two lists from the JSON data
+    // Extract the three news lists from the JSON data
     googl_news = data['google_news'];
     wired_news = data['wired_news'];
     techcrunch_news = data['techcrunch_news'];
-
-
+    console.log(wired_news)
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
   } finally {
-    // hide the loading Circle
-    const loadingCicrle = document.getElementById("loading_news_pie");
-    loadingCicrle.style.display = "none";
-
+    // Hide the loading Circle
+    const loadingCircle = document.getElementById("loading_news_pie");
+    loadingCircle.style.display = "none";
   }
 }
 
 
-
 async function count_emotions_with_labels(emotionsdata_list) {
+  const emotions_labels =  ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"];
+  data_count = [0, 0, 0, 0];
 
   emotionsdata_list.forEach(emotionsdata => {
-    const count = emotions_labels.map(label => emotionsdata.filter(val => val['emotion'] === label).length);
+    const count = emotions_labels.map(label => {
+      return emotionsdata.filter(val => val['title_emotion'].includes(label) || val['content_emotion'] === label).length;
+    });
 
     for (let i = 0; i < data_count.length; i++) {
       data_count[i] += count[i];
     }
-
   });
-  sessionStorage.setItem('news_networks', JSON.stringify(emotions_labels, data_count));
+
+  const emotionsData = {
+    emotions_labels: emotions_labels,
+    data_count: data_count
+  };
+
+  sessionStorage.setItem('news_networks', JSON.stringify(emotionsData));
   return data_count;
 }
 
@@ -81,10 +86,11 @@ export async function update_news_chart() {
   await get_data(topic, from_date, to_date, limit);
   await count_emotions_with_labels([techcrunch_news, wired_news, googl_news])
 
-
+  console.log(data_count)
+  console.log('sdkfjlaskjfnglfsad')
 
   // Create the chart
-  const ctx = document.getElementById('sentiment-chart').getContext('2d');
+  const ctx = document.getElementById('news_pie_chart').getContext('2d');
 
   chart = new Chart(ctx, {
     type: 'pie',

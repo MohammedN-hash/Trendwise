@@ -326,7 +326,6 @@ async function getData(topic, from_date, to_date, region = '', resolution = 'WOR
             values.push(value);
         }
         geo_names = geo_names.map(convertIso2ToIso3);
-        console.log(geo_names[5]);
 
     } catch (error) {
         // If an error occurs, log it to the console
