@@ -3,14 +3,12 @@
 // declare a variable to store the data
 let wired_news;
 let techcrunch_news;
-let googl_news;
-let data_count = [0, 0, 0, 0, 0, 0, 0, 0];
-
+let google_news;
 // declare a variable to store the chart object
 let chart;
-
+// declare a variable to store the emotions and emotion count
 let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
-
+let data_count = [0, 0, 0, 0, 0, 0, 0, 0];
 
 async function get_data(topic, from_date, to_date, limit = 20) {
   // Set default values if limit is empty or not provided
@@ -31,9 +29,13 @@ async function get_data(topic, from_date, to_date, limit = 20) {
     console.log(data);
 
     // Extract the three news lists from the JSON data
-    googl_news = data['google_news'];
+    google_news = data['google_news'];
+    sessionStorage.setItem('google_news', JSON.stringify(google_news));
     wired_news = data['wired_news'];
+    sessionStorage.setItem('wired_news', JSON.stringify(wired_news));
     techcrunch_news = data['techcrunch_news'];
+    sessionStorage.setItem('techcrunch_news', JSON.stringify(techcrunch_news));
+
     console.log(wired_news)
   } catch (error) {
     // If an error occurs, log it to the console
@@ -47,27 +49,19 @@ async function get_data(topic, from_date, to_date, limit = 20) {
 
 
 async function count_emotions_with_labels(emotionsdata_list) {
-  const emotions_labels =  ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"];
-  data_count = [0, 0, 0, 0];
+
 
   emotionsdata_list.forEach(emotionsdata => {
-    const count = emotions_labels.map(label => {
-      return emotionsdata.filter(val => val['title_emotion'].includes(label) || val['content_emotion'] === label).length;
-    });
+    const count = emotions_labels.map(label => emotionsdata.filter(val => val['title_emotion'] === label).length);
 
     for (let i = 0; i < data_count.length; i++) {
       data_count[i] += count[i];
     }
   });
 
-  const emotionsData = {
-    emotions_labels: emotions_labels,
-    data_count: data_count
-  };
-
-  sessionStorage.setItem('news_networks', JSON.stringify(emotionsData));
   return data_count;
 }
+
 
 
 export async function update_news_chart() {
@@ -79,16 +73,22 @@ export async function update_news_chart() {
   let from_date = document.getElementById("from").value;
   let to_date = document.getElementById("to").value;
 
-  if (chart) {
-    chart.destroy();
-  }
+
 
   await get_data(topic, from_date, to_date, limit);
-  await count_emotions_with_labels([techcrunch_news, wired_news, googl_news])
+  await count_emotions_with_labels([google_news,wired_news,techcrunch_news]);
+
+
 
   console.log(data_count)
   console.log('sdkfjlaskjfnglfsad')
 
+
+
+
+  if (chart) {
+    chart.destroy();
+  }
   // Create the chart
   const ctx = document.getElementById('news_pie_chart').getContext('2d');
 
@@ -142,7 +142,7 @@ function add_random_article(number_of_articles) {
   
   // Select random articles
   for (let i = 0; i < number_of_articles; i++) {
-    const article1 = googl_news[Math.floor(Math.random() * googl_news.length)];
+    const article1 = google_news[Math.floor(Math.random() * google_news.length)];
     const article2 = techcrunch_news[Math.floor(Math.random() * techcrunch_news.length)];
     const article3 = wired_news[Math.floor(Math.random() * wired_news.length)];
     selected_articles.push(article1, article2, article3);
