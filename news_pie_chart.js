@@ -154,7 +154,10 @@ function add_random_article(number_of_articles) {
     // Append posts and comments to the DOM
     html_content += `
       <h1>Title: ${article.title}</h1>
+      <p>title_emotion: ${article.title_emotion}</p>
       <p>Body: ${article.content}</p>
+      <p>body emotion: ${article.content_emotion}</p>
+      <p>link: ${article.link}</p>
     `;
   }
   
