@@ -1,16 +1,18 @@
 import { map } from './map.js';
+import { update_news_chart } from './news_pie_chart.js';
 
 
 // declare a variable to store the data
 let df_reddit_posts;
 let df_reddit_comments;
-let dataCount = [0, 0, 0, 0, 0, 0, 0, 0];
+let data_count = [0, 0, 0, 0, 0, 0, 0, 0];
 // declare a variable to store the chart object
 let chart;
 
 let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
+sessionStorage.setItem('emotions_labels', JSON.stringify(emotions_labels));
 
-async function getData(topic, from_date, to_date, number_posts = 10, number_comments = 10) {
+async function get_data(topic, from_date, to_date, number_posts = 10, number_comments = 10) {
   // Set default values if number_posts or number_comments is empty or not provided
   if (!number_posts || isNaN(number_posts)) {
     number_posts = 10;
@@ -21,11 +23,11 @@ async function getData(topic, from_date, to_date, number_posts = 10, number_comm
 
   try {
     // Show the loading Circle
-    const loadingCicrle = document.getElementById("loading-pie");
+    const loadingCicrle = document.getElementById("social_media_loading_pie");
     loadingCicrle.style.display = "block";
 
     // Make an HTTP request to a local server
-    const response = await fetch(`http://localhost:8000/social-networks?query=${topic}&from_date=${from_date}&to_date=${to_date}&subreddit=All&post_limit=${number_posts}&comment_limit=${number_comments}`);
+    const response = await fetch(`http://localhost:8000/social_networks?query=${topic}&from_date=${from_date}&to_date=${to_date}&subreddit=All&post_limit=${number_posts}&comment_limit=${number_comments}`);
 
     // Convert the response data to JSON format
     const data = await response.json();
@@ -40,7 +42,7 @@ async function getData(topic, from_date, to_date, number_posts = 10, number_comm
     console.error(error);
   }finally{
     // hide the loading Circle
-    const loadingCicrle = document.getElementById("loading-pie");
+    const loadingCicrle = document.getElementById("social_media_loading_pie");
     loadingCicrle.style.display = "none";
     
   }
@@ -53,17 +55,17 @@ async function count_emotions_with_labels(emotionsdata_list) {
   emotionsdata_list.forEach(emotionsdata => {
     const count = emotions_labels.map(label => emotionsdata.filter(val => val['emotion'] === label).length);
 
-    for (let i = 0; i < dataCount.length; i++) {
-      dataCount[i] += count[i];
+    for (let i = 0; i < data_count.length; i++) {
+      data_count[i] += count[i];
     }
 
   });
-  console.log(dataCount);
-  return dataCount;
+  sessionStorage.setItem('social_networks_count', JSON.stringify(emotions_labels,data_count));
+  return data_count;
 }
 
 
-async function updateChart() {
+async function update_chart() {
 
   // Get the value of the data
   let topic = document.getElementById("topic").value;
@@ -75,8 +77,9 @@ async function updateChart() {
   if (chart) {
     chart.destroy();
   }
+  const encoded_topic = encodeURIComponent(topic);
 
-  await getData(topic, from_date, to_date, number_posts, number_comments);
+  await get_data(encoded_topic, from_date, to_date, number_posts, number_comments);
   await count_emotions_with_labels([df_reddit_posts, df_reddit_comments])
 
 
@@ -90,7 +93,7 @@ async function updateChart() {
       labels: emotions_labels,
       datasets: [{
         label: 'Person/s',
-        data: dataCount,
+        data: data_count,
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
           'rgba(54, 162, 235, 0.5)',
@@ -180,7 +183,6 @@ function addRandomPostsAndComments() {
     </div>
   </div>
 </div>
-
   `;
 }
 
@@ -189,8 +191,9 @@ function addRandomPostsAndComments() {
 // Add an event listener to the text box element
 let searchBtn = document.getElementById("searchBtn");
 searchBtn.addEventListener("click", () => {
-  updateChart();
+  update_chart();
   map();
+  update_news_chart();
 });
 
 

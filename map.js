@@ -311,7 +311,7 @@ async function getData(topic, from_date, to_date, region = '', resolution = 'WOR
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // Make an HTTP request to a local server
-        const response = await fetch(`http://localhost:8000/google-trend?query=${topic}&region=${region}&resolution=${resolution}&from_date=${from_date}&to_date=${to_date}`);
+        const response = await fetch(`http://localhost:8000/google_trend?query=${topic}&region=${region}&resolution=${resolution}&from_date=${from_date}&to_date=${to_date}`);
 
         // Convert the response data to JSON format
         df_trend = await response.json();

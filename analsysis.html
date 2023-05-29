@@ -32,13 +32,13 @@
 	</div>
 
 	<div class="container">
-		
+
 		<div class="left-container">
-			<!-- Pie chart -->
+			<!-- social_media_pie_chart  -->
 			<div class="chart-container">
 				<canvas id="sentiment-chart"></canvas>
 
-				<div id="loading-pie" style="display: none;">
+				<div id="social_media_loading_pie" style="display: none;">
 					<div class="loading-circle"></div>
 				</div>
 
@@ -46,18 +46,17 @@
 		</div>
 
 		<div class="right-container">
-				<!-- Map -->
+			<!-- Map -->
 			<div id="map"></div>
-<div class="centerMapLoading">
-			<div id="loading-map" style="display: none;">
-				<div class="loading-circle"></div>
+			<div class="centerMapLoading">
+				<div id="loading-map" style="display: none;">
+					<div class="loading-circle"></div>
+				</div>
 			</div>
-		</div>
 		</div>
 
 
 	</div>
-
 
 
 
@@ -66,13 +65,31 @@
 	</div>
 
 
+	<div class="container">
 
+		<div class="left-container">
+			<!-- news_pie_chart -->
+			<div class="chart-container">
+				<canvas id="news_pie_chart"></canvas>
 
+				<div id="loading_news_pie" style="display: none;">
+					<div class="loading-circle"></div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="containerRandomArticle">
+		<p id="randome_news_articles"></p>
+	</div>
 
 
 	<script src="map.js"></script>
 
-	<script type="module" src="pie_chart.js"></script>
+	<script type="module" src="social_media_pie_chart.js"></script>
+	<script type="module" src="news_pie_chart.js"></script>
 
 	<script type="module" src="default_date.js"></script>
 </body>
