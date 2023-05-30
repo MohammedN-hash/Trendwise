@@ -73,17 +73,8 @@ export async function update_news_chart() {
   let from_date = document.getElementById("from").value;
   let to_date = document.getElementById("to").value;
 
-
-
   await get_data(topic, from_date, to_date, limit);
-  await count_emotions_with_labels([google_news,wired_news,techcrunch_news]);
-
-
-
-  console.log(data_count)
-  console.log('sdkfjlaskjfnglfsad')
-
-
+  await count_emotions_with_labels([google_news, wired_news, techcrunch_news]);
 
 
   if (chart) {
@@ -130,39 +121,95 @@ export async function update_news_chart() {
       }
     }
   });
-  add_random_article(3)
+  add_random_article()
 }
 
 
 
-function add_random_article(number_of_articles) {
-  const randomArticles = document.getElementById("randome_news_articles");
+function add_random_article() {
+  const randomArticles = document.getElementById("news_articles");
+  let  number_of_articles = document.getElementById("selected_news_number");
+ 
 
   let selected_articles = [];
-  
+
   // Select random articles
-  for (let i = 0; i < number_of_articles; i++) {
+  for (let i = 0; i < number_of_articles;) {
     const article1 = google_news[Math.floor(Math.random() * google_news.length)];
+    i++;
     const article2 = techcrunch_news[Math.floor(Math.random() * techcrunch_news.length)];
+    i++;
     const article3 = wired_news[Math.floor(Math.random() * wired_news.length)];
+    i++;
     selected_articles.push(article1, article2, article3);
   }
-  
+
   let html_content = '';
-  
+
   for (const article of selected_articles) {
     // Append posts and comments to the DOM
-    html_content += `
-      <h1>Title: ${article.title}</h1>
-      <p>title_emotion: ${article.title_emotion}</p>
-      <p>Body: ${article.content}</p>
-      <p>body emotion: ${article.content_emotion}</p>
-      <p>link: ${article.link}</p>
-    `;
+    const articleElement = createArticleElement(article)
+    randomArticles.appendChild(articleElement);
   }
-  
-  randomArticles.innerHTML = html_content;
+
+
 }
 
 
+function createArticleElement(article) {
+  const articleElement = document.createElement("div");
+  articleElement.classList.add("article");
 
+  const titleElement = document.createElement("h1");
+  titleElement.textContent = `Title: ${article.title}`;
+  articleElement.appendChild(titleElement);
+
+  const titleEmotionElement = document.createElement("p");
+  titleEmotionElement.classList.add("title-emotion");
+  titleEmotionElement.textContent = `Title Emotion: ${article.title_emotion}`;
+  articleElement.appendChild(titleEmotionElement);
+
+  const bodyElement = document.createElement("p");
+  bodyElement.textContent = `Body: ${article.content}`;
+  articleElement.appendChild(bodyElement);
+
+  const bodyEmotionElement = document.createElement("p");
+  bodyEmotionElement.classList.add("body-emotion");
+  bodyEmotionElement.textContent = `Body Emotion: ${article.content_emotion}`;
+  articleElement.appendChild(bodyEmotionElement);
+
+  const linkElement = document.createElement("p");
+  linkElement.classList.add("link");
+  const linkAnchor = document.createElement("a");
+  linkAnchor.href = article.link;
+  linkAnchor.textContent = "Read More";
+  linkElement.appendChild(linkAnchor);
+  articleElement.appendChild(linkElement);
+
+  return articleElement;
+}
+
+
+// Get the button element and the articles container element
+const toggleButton = document.getElementById("news_toggle_button");
+const articlesContainer = document.getElementById("news_articles");
+toggleButton.innerText  = "show ";
+// Add a click event listener to the toggle button
+toggleButton.addEventListener("click", function () {
+  // Toggle the visibility of the articles container
+  if (articlesContainer.style.display === "none") {
+    articlesContainer.style.display = "block";
+    toggleButton.innerText  = 'Hide'
+  } else {
+    articlesContainer.style.display = "none";
+    toggleButton.innerText  = 'Show'
+
+  }
+});
+
+
+
+const get_news = document.getElementById("get_news");
+get_news.addEventListener("click", function () {
+  add_random_article()
+});

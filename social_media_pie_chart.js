@@ -40,11 +40,11 @@ async function get_data(topic, from_date, to_date, number_posts = 10, number_com
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
-  }finally{
+  } finally {
     // hide the loading Circle
     const loadingCicrle = document.getElementById("social_media_loading_pie");
     loadingCicrle.style.display = "none";
-    
+
   }
 }
 
@@ -60,7 +60,7 @@ async function count_emotions_with_labels(emotionsdata_list) {
     }
 
   });
-  sessionStorage.setItem('social_networks_count', JSON.stringify(emotions_labels,data_count));
+  sessionStorage.setItem('social_networks_count', JSON.stringify(emotions_labels, data_count));
   return data_count;
 }
 
@@ -130,62 +130,74 @@ async function update_chart() {
 
 
 
-function addRandomPostsAndComments() {
-  const randomArticles = document.getElementById("RandomeArticles");
+function addRandomPostsAndComments(selected_number_to_get_random_posts=3) {
+  const randomArticles = document.getElementById("posts_list");
 
-  // Select two random posts
-  const post1 = df_reddit_posts[Math.floor(Math.random() * df_reddit_posts.length)];
-  const post2 = df_reddit_posts[Math.floor(Math.random() * df_reddit_posts.length)];
-
-  // Filter comments for each post
-  const comments1 = df_reddit_comments.filter(comment => comment["post_id"] === post1['id']);
-  const comments2 = df_reddit_comments.filter(comment => comment["post_id"] === post2["id"]);
-
-  // Append posts and comments to the DOM
-  randomArticles.innerHTML = `
-  <div class="random-articles">
-  <h2 class="section-title">Random posts</h2>
-  
-  <div class="post-container">
-    <h2>Post<h2>
-    <h3 class="post-title">Author: ${post1.author}</h3>
-    <div class="post-content">
-      <p class="post-text">${post1.text}</p>
-      <div class="post-emotion">Classfied emotion: ${post1.emotion}</div>
-      <h2>Comments<h2>
-
-      <ul class="comment-list">
-        ${comments1.map(comment => `
-        <li class="comment">
-          <div class="comment-text">${comment.text}</div>
-          <div class="comment-emotion">Classfied emotion: ${comment.emotion}</div>
-        </li>`)}
-      </ul>
-    </div>
-  </div>
-  
-  <div class="post-container">
-    <h2>Post<h2>
-
-    <h3 class="post-title">${post2.author}</h3>
-    <div class="post-content">
-      <p class="post-text">${post2.text}</p>
-      <div class="post-emotion">Classfied emotion: ${post2.emotion}</div>
-      <h2>Comments<h2>
-
-      <ul class="comment-list">
-        ${comments2.map(comment => `
-        <li class="comment">
-          <div class="comment-text">${comment.text}</div>
-          <div class="comment-emotion">Classfied emotion: ${comment.emotion}</div>
-        </li>`)}
-      </ul>
-    </div>
-  </div>
-</div>
-  `;
+  for (let i = 0; i < selected_number_to_get_random_posts; i++) {
+    // Select two random posts
+    let random_num=Math.random()
+    const post = df_reddit_posts[Math.floor(random_num * df_reddit_posts.length)];
+    const comments = df_reddit_comments.filter(comment => comment["post_id"] === post["id"]);
+    // Append posts and comments to the DOM
+    randomArticles.appendChild(createPostElement(post,comments))
+  }
 }
 
+function createPostElement(post, comments) {
+  const postContainer = document.createElement("div");
+  postContainer.classList.add("post-container");
+
+  const postTitle = document.createElement("h2");
+  postTitle.textContent = "Post";
+  postContainer.appendChild(postTitle);
+
+  const postAuthor = document.createElement("h3");
+  postAuthor.classList.add("post-title");
+  postAuthor.textContent = `Author: ${post.author}`;
+  postContainer.appendChild(postAuthor);
+
+  const postContent = document.createElement("div");
+  postContent.classList.add("post-content");
+
+  const postText = document.createElement("p");
+  postText.classList.add("post-text");
+  postText.textContent = post.text;
+  postContent.appendChild(postText);
+
+  const postEmotion = document.createElement("div");
+  postEmotion.classList.add("post-emotion");
+  postEmotion.textContent = `Classified emotion: ${post.emotion}`;
+  postContent.appendChild(postEmotion);
+
+  const commentsTitle = document.createElement("h2");
+  commentsTitle.textContent = "Comments";
+  postContent.appendChild(commentsTitle);
+
+  const commentList = document.createElement("ul");
+  commentList.classList.add("comment-list");
+
+  comments.forEach(comment => {
+    const commentItem = document.createElement("li");
+    commentItem.classList.add("comment");
+
+    const commentText = document.createElement("div");
+    commentText.classList.add("comment-text");
+    commentText.textContent = comment.text;
+    commentItem.appendChild(commentText);
+
+    const commentEmotion = document.createElement("div");
+    commentEmotion.classList.add("comment-emotion");
+    commentEmotion.textContent = `Classified emotion: ${comment.emotion}`;
+    commentItem.appendChild(commentEmotion);
+
+    commentList.appendChild(commentItem);
+  });
+
+  postContent.appendChild(commentList);
+  postContainer.appendChild(postContent);
+
+  return postContainer;
+}
 
 
 // Add an event listener to the text box element
@@ -198,3 +210,19 @@ searchBtn.addEventListener("click", () => {
 
 
 
+// Get the button element and the articles container element
+const toggleButton = document.getElementById("posts_toggle_button");
+const posts_container = document.getElementById("posts_list");
+toggleButton.innerText  = "show ";
+// Add a click event listener to the toggle button
+toggleButton.addEventListener("click", function () {
+  // Toggle the visibility of the articles container
+  if (posts_container.style.display === "none") {
+    posts_container.style.display = "block";
+    toggleButton.innerText  = 'Hide';
+  } else {
+    posts_container.style.display = "none";
+    toggleButton.innerText  = 'show ';
+
+  }
+});
