@@ -130,9 +130,10 @@ async function update_chart() {
 
 
 
-function addRandomPostsAndComments(selected_number_to_get_random_posts=3) {
+function addRandomPostsAndComments() {
   const randomArticles = document.getElementById("posts_list");
-
+  let selected_number_to_get_random_posts = document.getElementById("selected_posts_number").value;
+  randomArticles.innerHTML = ''
   for (let i = 0; i < selected_number_to_get_random_posts; i++) {
     // Select two random posts
     let random_num=Math.random()
