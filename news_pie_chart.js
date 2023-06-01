@@ -1,14 +1,27 @@
 
 
-// declare a variable to store the data
-let wired_news;
-let techcrunch_news;
-let google_news;
+// declare variables to store the data
+let wired_news = [];
+let techcrunch_news = [];
+let google_news = [];
 // declare a variable to store the chart object
 let chart;
 // declare a variable to store the emotions and emotion count
 let emotions_labels = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise", "optimism"]
 let data_count = [0, 0, 0, 0, 0, 0, 0, 0];
+
+
+
+function showLoadingCircle() {
+  const loadingCircle = document.getElementById("loading_news_pie");
+  loadingCircle.style.display = "block";
+}
+
+function hideLoadingCircle() {
+  const loadingCircle = document.getElementById("loading_news_pie");
+  loadingCircle.style.display = "none";
+}
+
 
 async function get_data(topic, from_date, to_date, limit = 20) {
   // Set default values if limit is empty or not provided
@@ -18,15 +31,14 @@ async function get_data(topic, from_date, to_date, limit = 20) {
 
   try {
     // Show the loading Circle
-    const loadingCircle = document.getElementById("loading_news_pie");
-    loadingCircle.style.display = "block";
+    showLoadingCircle()
 
     const encodedTopic = encodeURIComponent(topic);
     const url = `http://localhost:8000/get_news?query=${encodedTopic}&from_date=${from_date}&to_date=${to_date}&limit=${limit}`;
     const response = await fetch(url);
     // Convert the response data to JSON format
     const data = await response.json();
-    console.log(data);
+
 
     // Extract the three news lists from the JSON data
     google_news = data['google_news'];
@@ -36,14 +48,13 @@ async function get_data(topic, from_date, to_date, limit = 20) {
     techcrunch_news = data['techcrunch_news'];
     sessionStorage.setItem('techcrunch_news', JSON.stringify(techcrunch_news));
 
-    console.log(wired_news)
+
   } catch (error) {
     // If an error occurs, log it to the console
     console.error(error);
   } finally {
     // Hide the loading Circle
-    const loadingCircle = document.getElementById("loading_news_pie");
-    loadingCircle.style.display = "none";
+    hideLoadingCircle()
   }
 }
 
@@ -128,27 +139,25 @@ export async function update_news_chart() {
 
 function add_random_article() {
   const randomArticles = document.getElementById("news_articles");
-  let  number_of_articles = document.getElementById("selected_news_number");
+  let number_of_articles = parseInt(document.getElementById("selected_news_number").value);
  
 
   let selected_articles = [];
 
   // Select random articles
-  for (let i = 0; i < number_of_articles;) {
+  for (let i = 0; i < number_of_articles; i++) {
     const article1 = google_news[Math.floor(Math.random() * google_news.length)];
-    i++;
     const article2 = techcrunch_news[Math.floor(Math.random() * techcrunch_news.length)];
-    i++;
     const article3 = wired_news[Math.floor(Math.random() * wired_news.length)];
-    i++;
     selected_articles.push(article1, article2, article3);
   }
 
-  let html_content = '';
+  console.log(selected_articles)
 
   for (const article of selected_articles) {
     // Append posts and comments to the DOM
     const articleElement = createArticleElement(article)
+    
     randomArticles.appendChild(articleElement);
   }
 
