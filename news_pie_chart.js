@@ -99,7 +99,7 @@ export async function update_news_chart() {
     data: {
       labels: emotions_labels,
       datasets: [{
-        label: 'Person/s',
+        label: 'Emotions/s',
         data: data_count,
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
@@ -128,7 +128,7 @@ export async function update_news_chart() {
       responsive: true,
       title: {
         display: true,
-        text: 'News Analysis'
+        text: 'News emotion analysis'
       }
     }
   });
@@ -140,7 +140,7 @@ export async function update_news_chart() {
 function add_random_article() {
   const randomArticles = document.getElementById("news_articles");
   let number_of_articles = parseInt(document.getElementById("selected_news_number").value);
- 
+  randomArticles.innerHTML = ''
 
   let selected_articles = [];
 
@@ -202,20 +202,19 @@ function createArticleElement(article) {
 // Get the button element and the articles container element
 const toggleButton = document.getElementById("news_toggle_button");
 const articlesContainer = document.getElementById("news_articles");
-toggleButton.innerText  = "show ";
+toggleButton.innerHTML = "<i class='fas fa-chevron-up'></i>";
+
 // Add a click event listener to the toggle button
 toggleButton.addEventListener("click", function () {
   // Toggle the visibility of the articles container
   if (articlesContainer.style.display === "none") {
     articlesContainer.style.display = "block";
-    toggleButton.innerText  = 'Hide'
+    toggleButton.innerHTML = "<i class='fas fa-chevron-up'></i>";
   } else {
     articlesContainer.style.display = "none";
-    toggleButton.innerText  = 'Show'
-
+    toggleButton.innerHTML = "<i class='fas fa-chevron-down'></i>";
   }
 });
-
 
 
 const get_news = document.getElementById("get_news");

@@ -1,3 +1,4 @@
+/* Genral style */
 body {
 	background-color: rgb(255, 255, 255);
 }
@@ -15,16 +16,43 @@ p {
 }
 
 
-.posts_container {
+.heading {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input {
+  width: 100px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  margin-left: 10px;
+}
+.gray_container {
 	width: 100%;
 	margin: 0 auto;
 	padding: 20px;
 	background-color: #f2f2f2;
 	border: 1px solid #ccc;
 	border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   }
   
-.container {
+.c_container {
 	display: flex;
 	justify-content: space-between;
 	color: rgb(0, 0, 0);
@@ -39,15 +67,14 @@ p {
   }
   
   .left-container {
-	background-color:transparent; /* set background color for left container */
-  }
+	background-color:transparent; 
   
   .right-container {
-	background-color: transparent; /* set background color for right container */
+	background-color: transparent; 
   }
   
-.chart-container {
-	width: 100%;
+.chart_container {
+	width: 55%;
 	margin: auto;
 }
 
@@ -108,7 +135,7 @@ p {
 	}
 }
 
-/* Section styles */
+/* post section styles */
 
   .posts_input_container {
     display: flex;
@@ -168,7 +195,7 @@ p {
   }
   
 
-
+/* Loading style */
 
   .loading-circle {
 	width: 60px;
@@ -196,8 +223,14 @@ p {
   }
 
 
-  /* News  */
+  /* News section style  */
+  .center_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
+  }
   .article {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -213,7 +246,7 @@ p {
 
   .article p {
     margin: 0;
-  }
+  }a
 
   .article .title-emotion {
     font-weight: bold;
@@ -238,27 +271,27 @@ p {
     margin-top: 50px;
   }
 
-  .heading {
-    font-size: 24px;
-    margin-right: 10px;
-  }
 
-  .button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
 
-  .input {
-    width: 100px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: center;
-    margin-left: 10px;
-  }
+/* Header for list container  */
+.header_container {
+  display: flex;
+  align-items: center;
+}
+
+.heading {
+  margin-right: 10px;
+}
+
+.toggle_button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000;
+  margin-left: auto; /* Add this line to push the button to the right */
+}
+
+.posts_list{
+  display: none;
+}

@@ -9,6 +9,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<!-- Map open source -->
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<!-- Header container -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 
 	<link rel="stylesheet" type="text/css" href="analysis.css">
 </head>
@@ -31,11 +34,11 @@
 		<button id="searchBtn" class="button">Search</button>
 	</div>
 
-	<div class="container">
+	<div class="c_container">
 
 		<div class="left-container">
 			<!-- social_media_pie_chart  -->
-			<div class="chart-container">
+			<div class="chart_container">
 				<canvas id="sentiment-chart"></canvas>
 
 				<div id="social_media_loading_pie" style="display: none;">
@@ -60,44 +63,51 @@
 
 
 
-	<div class="posts_container">
-		<h1 class="heading">See Engaging posts</h1>
-		<div class="posts_input_container">
-			<input id="selected_posts_number" class="input" type="number" value="3" />
+	<div class="gray_container">
 
-			<button id="get_posts" class="button">Search</button>
-			<button id="posts_toggle_button" class="posts_toggle_button">Hide</button>
+		<div class="header_container">
+			<h1 class="heading">Read posts</h1>
+			<button id="posts_toggle_button" class="toggle_button"></button>
 		</div>
 
-		<p id="posts_list"></p>
-	</div>
+		<div id="posts_list">
 
-
-	<div class="container">
-
-		<div class="left-container">
-			<!-- news_pie_chart -->
-			<div class="chart-container">
-				<canvas id="news_pie_chart"></canvas>
-
-				<div id="loading_news_pie" style="display: none;">
-					<div class="loading-circle"></div>
-				</div>
-
+			<div class="posts_input_container">
+				<input id="selected_posts_number" class="input" type="number" value="3" />
+				<button id="get_posts" class="button">Search</button>
 			</div>
+
 		</div>
 
 	</div>
 
-	<div class="posts_container">
-		<h1 class="heading">Uncover Engaging News Articles and Dive into Public Opinions</h1>
-		<div class="news_container">
-			<input id="selected_news_number" class="input" type="number" value="3" />
 
-			<button id="get_news" class="button">Search</button>
-			<button id="news_toggle_button" class="news_toggle_button">Hide</button>
+
+
+	<div class="center_container">
+		<!-- news_pie_chart -->
+		<div class="chart_container">
+			<canvas id="news_pie_chart"></canvas>
+
+			<div id="loading_news_pie" style="display: none;">
+				<div class="loading-circle"></div>
+			</div>
+
 		</div>
+	</div>
+
+
+	<div class="gray_container">
+		<div class="header_container">
+			<h1 class="heading">Read news articles and dive into public opinions</h1>
+			<button id="news_toggle_button" class="toggle_button"></button>
+		</div>
+
 		<div id="news_articles">
+			<div class="news_container">
+				<input id="selected_news_number" class="input" type="number" value="3" />
+				<button id="get_news" class="button">Search</button>
+			</div>
 		</div>
 	</div>
 

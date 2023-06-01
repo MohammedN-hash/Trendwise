@@ -34,6 +34,8 @@ async function get_data(topic, from_date, to_date, number_posts = 10, number_com
 
     // Extract the two lists from the JSON data
     df_reddit_posts = data['posts'];
+    sessionStorage.setItem('df_reddit_posts', JSON.stringify(df_reddit_posts));
+
     df_reddit_comments = data['comments'];
 
 
@@ -60,7 +62,6 @@ async function count_emotions_with_labels(emotionsdata_list) {
     }
 
   });
-  sessionStorage.setItem('social_networks_count', JSON.stringify(emotions_labels, data_count));
   return data_count;
 }
 
@@ -92,7 +93,7 @@ async function update_chart() {
     data: {
       labels: emotions_labels,
       datasets: [{
-        label: 'Person/s',
+        label: 'Emotion/s',
         data: data_count,
         backgroundColor: [
           'rgba(255, 99, 132, 0.5)',
@@ -211,19 +212,19 @@ searchBtn.addEventListener("click", () => {
 
 
 
-// Get the button element and the articles container element
+// Get the button element and the posts container element
 const toggleButton = document.getElementById("posts_toggle_button");
-const posts_container = document.getElementById("posts_list");
-toggleButton.innerText  = "show ";
+const postsContainer = document.getElementById("posts_list");
+toggleButton.innerHTML = "<i class='fas fa-chevron-up'></i>";
+
 // Add a click event listener to the toggle button
 toggleButton.addEventListener("click", function () {
-  // Toggle the visibility of the articles container
-  if (posts_container.style.display === "none") {
-    posts_container.style.display = "block";
-    toggleButton.innerText  = 'Hide';
+  // Toggle the visibility of the posts container
+  if (postsContainer.style.display === "none") {
+    postsContainer.style.display = "block";
+    toggleButton.innerHTML = "<i class='fas fa-chevron-up'></i>";
   } else {
-    posts_container.style.display = "none";
-    toggleButton.innerText  = 'show ';
-
+    postsContainer.style.display = "none";
+    toggleButton.innerHTML = "<i class='fas fa-chevron-down'></i>";
   }
 });

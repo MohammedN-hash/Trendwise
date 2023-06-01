@@ -341,7 +341,8 @@ export async function map() {
     let topic = document.getElementById("topic").value;
     let from_date = document.getElementById("from").value;
     let to_date = document.getElementById("to").value;
-
+    // Clear the existing chart
+    document.getElementById('map').innerHTML = '';
     await getData(topic, from_date, to_date)
 
     // Create the Plotly figure with a choropleth map
