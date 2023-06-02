@@ -86,7 +86,7 @@ async function update_chart() {
 
 
   // Create the chart
-  const ctx = document.getElementById('sentiment-chart').getContext('2d');
+  const ctx = document.getElementById('social_media_pie_chart').getContext('2d');
 
   chart = new Chart(ctx, {
     type: 'pie',

@@ -1,4 +1,4 @@
-/* Genral style */
+/* General style */
 body {
 	background-color: rgb(255, 255, 255);
 }
@@ -16,30 +16,26 @@ p {
 }
 
 
-.heading {
-  font-size: 24px;
-  margin-right: 10px;
-}
-
 .button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+	padding: 10px 20px;
+	font-size: 16px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
 }
 
 .input {
-  width: 100px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: center;
-  margin-left: 10px;
+	width: 100px;
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	text-align: center;
+	margin-left: 10px;
 }
+
 .gray_container {
 	width: 100%;
 	margin: 0 auto;
@@ -47,40 +43,44 @@ p {
 	background-color: #f2f2f2;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  }
-  
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
 .c_container {
 	display: flex;
 	justify-content: space-between;
 	color: rgb(0, 0, 0);
+}
 
-  }
-  
-  .left-container, .right-container {
-	width: 50%; /* adjust as needed */
+.left-container,
+.right-container {
+	width: 50%;
+	/* adjust as needed */
 	object-fit: fill;
 	box-sizing: border-box;
 	padding: 20px;
-  }
-  
-  .left-container {
-	background-color:transparent; 
-  
-  .right-container {
-	background-color: transparent; 
-  }
-  
-.chart_container {
-	width: 55%;
-	margin: auto;
+
+
+	height: 100%;
+
+
 }
 
-#sentiment-chart {
-	height: 200px;
-	margin-top: 20px;
+.left-container {
+	background-color: transparent;
+	
+}
+
+.right-container {
+	background-color: transparent;
+}
+
+.chart_container {
+	width: 55%;
+	height: 100%;
+	margin: auto;
 }
 
 .center {
@@ -88,34 +88,29 @@ p {
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-  }
-  
-  input[type="number"] {
+}
+
+input[type="number"] {
 	margin-left: 10px;
-  }
-  
-  label {
+}
+
+label {
 	color: rgb(0, 0, 0);
 	margin-right: 5px;
 	margin-left: 5px;
-  }
-
-
+}
 
 .textName {
 	white-space: nowrap;
 	overflow: hidden;
 	border-right: 4px solid #fefefe;
-	animation: cursor 4s step-start ,
-		text 4s steps(45) ;
+	animation: cursor 4s step-start, text 4s steps(45);
 	font-family: sans-serif;
 	color: white;
 	margin-left: 5%;
-
 }
 
 @keyframes cursor {
-
 	0%,
 	100% {
 		border-color: #ffffff;
@@ -123,81 +118,75 @@ p {
 }
 
 @keyframes text {
-	
 	0% {
 		width: 0;
-
 	}
 
 	100% {
 		width: 45ch;
-
 	}
 }
 
-/* post section styles */
+/* Post section styles */
+.posts_input_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
 
-  .posts_input_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-  }
-
-  .section-title {
+.section-title {
 	font-size: 2.5rem;
 	margin-bottom: 40px;
-  }
-  
-  /* Post styles */
-  .post-container {
+}
+
+/* Post styles */
+.post-container {
 	background-color: #fff;
 	border-radius: 10px;
 	padding: 30px;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 	margin-bottom: 30px;
 	transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
-  
-  .post-container:hover {
+}
+
+.post-container:hover {
 	transform: translateY(-10px);
 	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  .post-title {
+}
+
+.post-title {
 	font-size: 1.5rem;
 	margin-bottom: 20px;
-  }
-  
-  .post-content {
+}
+
+.post-content {
 	display: flex;
 	flex-direction: column;
-  }
-  
-  .post-text {
+}
+
+.post-text {
 	font-size: 1.2rem;
 	line-height: 1.5;
 	margin-bottom: 20px;
-  }
-  
-  /* Comment styles */
-  .comment-list {
+}
+
+/* Comment styles */
+.comment-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-  }
-  
-  .comment {
+}
+
+.comment {
 	font-size: 1.1rem;
 	line-height: 1.5;
 	margin-bottom: 10px;
-  }
-  
+}
 
 /* Loading style */
-
-  .loading-circle {
+.loading-circle {
 	width: 60px;
 	height: 60px;
 	border: 6px solid #3498db;
@@ -210,88 +199,90 @@ p {
 	align-items: center;
 	margin-bottom: 50%;
 	margin-top: 10%;
-  }
-  
-  @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-  }
+}
 
-  .centerMapLoading{
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 
+.centerMapLoading {
 	margin-top: 35%;
-  }
+}
 
+/* News section style */
+.center_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
 
-  /* News section style  */
-  .center_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.article {
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
 
-  }
-  .article {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
+.article h1 {
+	font-size: 24px;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
 
-  .article h1 {
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
+.article p {
+	margin: 0;
+}
 
-  .article p {
-    margin: 0;
-  }a
+.article .title-emotion {
+	font-weight: bold;
+	color: #555;
+}
 
-  .article .title-emotion {
-    font-weight: bold;
-    color: #555;
-  }
+.article .body-emotion {
+	font-style: italic;
+	color: #777;
+}
 
-  .article .body-emotion {
-    font-style: italic;
-    color: #777;
-  }
+.article .link {
+	margin-top: 10px;
+}
 
-  .article .link {
-    margin-top: 10px;
-  }
+.news_container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
 
-
-  .news_container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-  }
-
-
-
-/* Header for list container  */
+/* Header for list container */
 .header_container {
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .heading {
-  margin-right: 10px;
+	margin-right: 10px;
+	font-size: 24px;
+	margin-right: 10px;
 }
 
 .toggle_button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  color: #000;
-  margin-left: auto; /* Add this line to push the button to the right */
+	background: none;
+	border: none;
+	cursor: pointer;
+	font-size: 20px;
+	color: #000;
+	margin-left: auto;
+	/* Add this line to push the button to the right */
 }
 
-.posts_list{
-  display: none;
+.posts_list {
+	display: none;
 }
