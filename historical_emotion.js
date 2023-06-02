@@ -38,6 +38,7 @@ function countEmotionsPerDate(list) {
 
 
 // Function to plot emotions per date for the selected platform
+// Function to plot emotions per date for the selected platform
 function plotEmotionsPerDate() {
   // Get the selected platform from the dropdown
   const selectedPlatform = platformDropdown.value;
@@ -50,7 +51,7 @@ function plotEmotionsPerDate() {
 
   // Prepare data for the chart
   const chartData = {
-    labels: Object.keys(platformEmotions),
+    labels: Object.keys(platformEmotions).sort(), // Sort the dates in ascending order
     datasets: [],
   };
 
@@ -92,6 +93,7 @@ function plotEmotionsPerDate() {
     },
   });
 }
+
 
 // Function to populate the platform dropdown
 function populatePlatformDropdown() {
