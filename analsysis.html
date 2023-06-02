@@ -114,10 +114,10 @@
 
 
 
-
+	<div class="center_container"> <h1>Compare emotions per platform</h1></div>
 
 	<div class="center_container">
-		<!-- bar_chart -->
+		<!-- emotion_per_date_chart -->
 		<div class="chart_container">
 			<canvas id="bar_chart"></canvas>
 
@@ -130,13 +130,30 @@
 
 
 
+	<div class="center_container"> <h1>Emotions per period of time</h1></div>
 
+
+	<div class="center_container">
+		<!-- bar_chart -->
+		<div class="chart_container">
+			<div class="chart_controls">
+				<select id="platform_dropdown"></select>
+			</div>
+			<canvas id="emotion_per_date_chart"></canvas>
+	
+			<div id="loading_bar_chart_pie" style="display: none;">
+				<div class="loading-circle"></div>
+			</div>
+		</div>
+	</div>
+	
 
 	<script type="module" src="default_date.js"></script>
 	<script src="map.js"></script>
 	<script type="module" src="social_media_pie_chart.js"></script>
 	<script type="module" src="news_pie_chart.js"></script>
 	<script type="module" src="bar_chart.js"></script>
+	<script type="module" src="historical_emotion.js"></script>
 
 
 
