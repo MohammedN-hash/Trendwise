@@ -1,5 +1,7 @@
 import { map } from './map.js';
 import { update_news_chart } from './news_pie_chart.js';
+import {   generateEmotionBarChart} from './bar_chart.js';
+
 
 
 // declare a variable to store the data
@@ -208,6 +210,8 @@ searchBtn.addEventListener("click", () => {
   update_chart();
   map();
   update_news_chart();
+  generateEmotionBarChart();
+  
 });
 
 
