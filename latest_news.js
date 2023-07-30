@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         titleElement.classList.add("title");
         titleElement.textContent = article.title;
         titleElement.href = article.link;
+        titleElement.target = "_blank"; // Set the target attribute to "_blank"
         articleElement.appendChild(titleElement);
 
         const contentElement = document.createElement("p");
